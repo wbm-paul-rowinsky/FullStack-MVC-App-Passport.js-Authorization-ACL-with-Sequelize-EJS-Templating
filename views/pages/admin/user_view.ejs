@@ -1,0 +1,112 @@
+<%- include("../partials/head", { title: "Admin: view user" }) %>
+  <body>
+    <h3>Admin: view user with id: <%= userToView.id %> </h3>
+    <%- include("../partials/navbar", {user}) %>
+
+    <form action="/admin/users/view/<%= userToView.id %>" method="POST">
+      <div>
+        <label for="nameControl" class="form-label">Name: </label>
+        <input type="text" id="nameControl" class="form-control" name="name" value="<%= userToView.name %>" disabled/>
+    </div>
+    <div>
+      <label for="surnameControl" class="form-label">Surame: </label>
+      <input type="text" id="surnameControl" class="form-control" name="surname" value="<%= userToView.surname %>" disabled/>
+    </div>
+    <div>
+      <label for="emailControl" class="form-label">Email: </label>
+      <input type="email" id="emailControl" class="form-control" name="email" value="<%= userToView.email%>" disabled/>
+    </div>
+    <!-- <div>
+      <label for="passwordControl" class="form-label">Password: </label>
+      <input type="password" id="passwordControl" class="form-control" name="password" value="<%= userToView.password%>" disabled/>
+    </div> -->
+    <div>
+      <label for="roleControl" class="form-label">Role: </label>
+      <%= userToView.role %>
+    </div>
+    <div>
+      <label for="addressControl" class="form-label">Address: </label>
+      <input type="addresss" id="addressControl" class="form-control" name="address" value="<%= userToView.address %>" disabled/>
+    </div>
+    <div>
+      <label for="ageControl" class="form-label">Age: </label>
+      <input type="number" min="18" max="100" id="ageControl" class="form-control" name="age" value="<%= userToView.age %>" disabled/>
+  </div>
+    <div>
+      <label for="schoolControl" class="form-label">School: </label>
+      <%= htmlHelper.getElValueFromArrById(schools, userToView.schoolId, "name") %>
+    </div>
+    </form>
+    <a href="/admin/users/edit/<%= userToView.id %>" class="btn">Edit User</a>
+
+    <!-- subject -->
+    <p>
+      <h3>User <%= userToView.name + " " + userToView.surname %> subjects: </h3>
+    </p>
+
+    <% const subjects = userToView["Subjects"] %>
+    <% if (subjects) {%>
+      <% for (let i = 0; i < subjects.length; i++ ) {%> 
+        <% const subject = subjects[i] %>
+        <h3>Subject: <%= subject.name %></h3>
+        <table class="table">
+          <tr>
+            <td>subject id</td>
+            <td>name</td>
+            <td>school</td>
+            <td>teacher</td>
+            <td>actions</td>
+          </tr>
+          <tr>
+            <td><%= subject.id %></td>
+            <td><%= subject.name %></td>
+            <td><%= subject["School"]?.name %></td>
+            <td><%= subject["teacher"]?.name %></td>
+            <td>
+              <a href="/subjects/edit/<%= subject.id %>">edit</a>
+              <a href="/subjects/view/<%= subject.id %>">view</a>
+            </td>
+          </tr>
+        </table>
+      <!-- grades -->
+    <% const grades = subject["Grades"] %>
+    <% if (grades) {%>
+      <h4>Subject <%= subject.name %> grades: </h4>
+        <table class="table">
+          <tr>
+            <td>grade id</td>
+            <td>studentId</td>
+            <td>grade</td>
+            <td>school</td>
+            <td>SubjectId</td>
+            <td>teacher</td>
+          </tr>
+          <% for (let a = 0; a < grades.length; a++ ) {%> 
+            <% const grade = grades[a] %>
+          <tr>
+            <td><%= grade.id %></td>
+            <td><%= grade.studentId %></td>
+            <td><%= grade.grade %></td>
+            <td><%= grade["School"]?.name %></td>
+            <td><%= grade.subjectId %></td>
+            <td><%= grade["teacher"]?.name %></td>
+            <td>
+              <a href="/grades/edit/<%= grade.id %>">edit</a>
+              <a href="/grades/view/<%= grade.id %>">view</a>
+            </td>
+          </tr>
+                
+      <% } %>
+        </table>
+
+    
+    <%}%>
+
+      <% } %>
+    
+    <%}%>
+<div>
+    <%- include("../partials/footer", { title: "Admin: user view" }) %>
+  </div>
+  </body>
+</html>

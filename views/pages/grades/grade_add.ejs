@@ -1,0 +1,40 @@
+<%- include("../partials/head", {title: "Add Grade"}) %> 
+<body>
+    <h3>Add grade</h3>
+    <%- include("../partials/navbar", {user}) %>
+    <% const selectTeacherHtml = htmlHelper.getSelectIdCodeFromArr(teachers, "teacherId", "name", "teacherControl", "form-control" ) %>
+    <% const selectSchoolHtml = htmlHelper.getSelectIdCodeFromArr(schools, "schoolId", "name", "schoolControl", "form-control" ) %>
+    <% const selectSubjectHtml = htmlHelper.getSelectIdCodeFromArr(subjects, "subjectId", "name", "subjectControl", "form-control" ) %>
+    <% const selectStudentHtml = htmlHelper.getSelectIdCodeFromArr(students, "studentId", "name", "studentControl", "form-control" ) %>
+
+    <form action="/grades/add" method="post">
+        <div>
+            <label for="gradeControl" class="form-label">Grade: </label>
+            <input type="number" min="1" max="6" step="0.5" name="grade" required class="form-control" id="gradeControl">
+        </div>
+        <div>
+            <label for="descriptionControl" class="form-label">Description: </label>
+            <input type="text" name="description" class="form-control" id="descriptionControl">
+        </div>
+        <div>
+            <label for="schoolControl" class="form-label">School: </label>
+            <%- selectSchoolHtml %>
+        </div>
+        <div>
+            <label for="subjectControl" class="form-label">Subject: </label>
+            <%- selectSubjectHtml %>
+        </div>
+        <div>
+            <label for="teacherControl" class="form-label">Teacher: </label>
+            <%- selectTeacherHtml %>
+        </div>
+        <div>
+            <label for="studentControl" class="form-label">Student: </label>
+            <%- selectStudentHtml %>
+        </div>
+        <button class="btn" type="submit">Save grade</button>
+    </form>
+
+    <%- include("../partials/footer", {title: "Add Grade"}) %>
+</body>
+</html>

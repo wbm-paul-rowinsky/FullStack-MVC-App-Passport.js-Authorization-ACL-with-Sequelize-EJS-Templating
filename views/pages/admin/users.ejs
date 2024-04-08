@@ -1,0 +1,41 @@
+<%- include("../partials/head", { title: "Admin: Users" }) %>
+<body>
+    <h3>Admin: users list</h3>
+    <%- include("../partials/navbar", {user}) %>
+
+    <p>
+        <% if (users) {%>
+            <table class="table">
+                <tr>
+                    <th>_id</th>
+                    <th>name</th>
+                    <th>surname</th>
+                    <th>email</th>
+                    <th>role</th>
+                    <th>age</th>
+                    <th>school</th>
+                    <th>actions</th>
+                </tr>
+                <% for (let i=0; i < users.length; i++) { %>
+                    <tr>
+                        <td><%= users[i].id %></td>
+                        <td><%= users[i].name %></td>
+                        <td><%= users[i].surname %></td>
+                        <td><%= users[i].email %></td>
+                        <td><%= users[i].role %></td>
+                        <td><%= users[i].age %></td>
+                        <td><%= htmlHelper.getElValueFromArrById(schools, users[i].schoolId, "name") %></td>
+                        <td>
+                            <a href="/admin/users/edit/<%= users[i].id %>">edit</a>
+                            <a href="/admin/users/view/<%= users[i].id %>">view</a>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        <% } %>
+    </p>
+    <a href="/admin/users/add" class="btn">Add user</a>
+    <%- include("../partials/footer", { title: "Users" }) %>
+
+</body>
+</html>

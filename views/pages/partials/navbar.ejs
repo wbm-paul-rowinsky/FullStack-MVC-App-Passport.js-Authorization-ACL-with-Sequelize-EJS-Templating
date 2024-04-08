@@ -1,0 +1,37 @@
+<div class="header">
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <% if (user && user.email) { %>
+      <li><a href="/dashboard">dashboard</a></li>
+      <li><a href="/logout">logout</a></li>
+      <% } else { %>
+      <li><a href="/login">login</a></li>
+      <li><a href="/register">register</a></li>
+      <% } %>
+    </ul>
+  </nav>
+  <% if (user && user.email) { %>
+    <nav>
+      <% if (htmlHelper.hasAccessForUserRoleOrHigher(user.role, "admin")) { %>
+        <li>Admin option: <a href="/admin/schools">Schools</a></li>
+      <% } %>
+      <% if (htmlHelper.hasAccessForUserRoleOrHigher(user.role, "director")) { %>
+        <% if (user.schoolId) { %>
+          <li>Director option: <a href="/admin/schools/myschool">My school</a></li>
+        <% } %>
+      <% } %>
+      <% if (htmlHelper.hasAccessForUserRoleOrHigher(user.role, "teacher")) { %>
+        <li>Teacher option: <a href="/teacher/mysubjects">Subjects</a></li>
+      <% } %>
+      <% if (htmlHelper.hasAccessForUserRoleOrHigher(user.role, "student")) { %>
+        <li>Student option: <a href="/student/mysubjects">Subjects</a></li>
+      <% } %>
+    </nav>
+  <% } %>
+</div>
+<p>
+    <% if (user && user.email) { %>
+        <h3> <%= user.email %> is logged in </h3>
+    <% } %>
+</p>

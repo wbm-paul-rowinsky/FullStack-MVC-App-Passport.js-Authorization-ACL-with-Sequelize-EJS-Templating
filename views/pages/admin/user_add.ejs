@@ -1,0 +1,46 @@
+<%- include("../partials/head", { title: "Admin: user add" }) %>
+  <body>
+    <h3>Admin: add user</h3>
+    <%- include("../partials/navbar", {user}) %>
+    <% let selectSchoolHtml = htmlHelper.getSelectIdCodeFromArr(schools, "schoolId", "name", "schoolControl", "form-control" ) %>
+    <% let selectRoleHtml = htmlHelper.getSelectCodeFromArr(rolesArr, "role", "roleControl", "form-control", "student" ) %>
+    
+    <form action="/admin/users/add" method="POST">
+      <div>
+        <label for="nameControl" class="form-label">Name: </label>
+        <input type="text" id="nameControl" class="form-control" name="name"/>
+    </div>
+    <div>
+      <label for="surnameControl" class="form-label">Surame: </label>
+      <input type="text" id="surnameControl" class="form-control" name="surname"/>
+    </div>
+    <div>
+      <label for="emailControl" class="form-label">Email: </label>
+      <input type="email" id="emailControl" class="form-control" name="email"/>
+    </div>
+    <div>
+      <label for="passwordControl" class="form-label">Password: </label>
+      <input type="password" id="passwordControl" class="form-control" name="password"/>
+    </div>
+    <div>
+      <label for="roleControl" class="form-label">Role: </label>
+      <%- selectRoleHtml %>
+    </div>
+    <div>
+      <label for="ageControl" class="form-label">Age: </label>
+      <input type="number" min="18" max="100" id="ageControl" class="form-control" name="age"/>
+  </div>
+    <div>
+      <label for="addressControl" class="form-label">Address: </label>
+      <input type="addresss" id="addressControl" class="form-control" name="address"/>
+    </div>
+    <div>
+      <label for="schoolControl" class="form-label">School: </label>
+      <%- selectSchoolHtml %>
+    </div>
+      <button type="submit" class="btn">Save user</button>
+    </form>
+    <%- include("../partials/footer", { title: "Admin: user add" }) %>
+
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<%- include("../partials/head", { title: "View subject" }) %>
+  <body>
+    <h2>View subject by id: <%= subjectToView.id %></h2>
+    <%- include("../partials/navbar", { user }) %>
+    <form action="/subjects/view/<%= subjectToView.id %>" method="POST">
+        <div>
+            <label for="nameControl" class="form-label">Name: </label>
+            <input type="text" id="nameControl" class="form-control" name="name" value="<%= subjectToView.name %>" disabled/>
+        </div>
+        <div>
+            <label for="descriptionControl" class="form-label">Description: </label>
+            <input type="text" id="descriptionControl" class="form-control" name="description" value="<%= subjectToView.description %>" disabled/>
+        </div>
+        <div>
+          <label for="teacherControl" class="form-label">Teacher: </label>
+          <%= htmlHelper.getElValueFromArrById(teachers, subjectToView.teacherId, "name") %>
+        </div>
+        <div>
+          <label for="schoolControl" class="form-label">School: </label>
+          <%= htmlHelper.getElValueFromArrById(schools, subjectToView.schoolId, "name") %>
+        </div>
+    </form>
+
+    <a href="/subjects/edit/<%= subjectToView.id %>" class="btn">Edit subject</a>
+
+    <!-- students list-->
+
+    <p>
+      <% const students = subjectToView["Users"] %>
+      <% if (students) {%>
+          <table class="table">
+              <tr>
+                  <th>student id</th>
+                  <th>name</th>
+                  <th>surname</th>
+                  <th>role</th>
+                  <th>school</th>
+                  <th>grade</th>
+                  <th>actions</th>
+              </tr>
+              <% for (let i=0; i < students.length; i++) { %>
+                <% const student = students[i] %>
+                <% const grades = student["Grades"] %>
+                <% for (let i=0; i < grades.length; i++) { %>
+                  <% const grade = grades[i].grade %>
+                  <tr>
+                      <td>
+                        <a href="/admin/users/edit/<%= student.id %>"><%= student.id %></a>
+                      </td>
+                      <td><%= student.name %></td>
+                      <td><%= student.surname %></td>
+                      <td><%= student.role %></td>
+                      <td><%= student["Schools"]?.name %></td>
+                      <td><%= grade %></td>
+                      <td>
+                          <% if (grade) {%>
+                            <a href="/grades/view/<%= grades[i].id%>">view grade</a>
+                          <% } %>
+                          <a href="/subjects/view/<%= subjectToView.id%> /student/<%= student.id %>/addgrade">add grade</a>
+                      </td>
+                  </tr>
+                  <% } %>
+              <% } %>
+          </table>
+      <% } %>
+  </p>
+  
+  <a href="/subjects/view/<%= subjectToView.id %>/addstudent" class="btn">Add student to subject: <%= subjectToView.name %></a>
+    <%- include("../partials/footer", { title: "View subject" }) %>
+
+  </body>
+</html>

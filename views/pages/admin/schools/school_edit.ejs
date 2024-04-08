@@ -1,0 +1,25 @@
+<%- include("../../partials/head", { title: "Admin edit school" }) %>
+  <body>
+    <h2>Admin Edit School with id: <%= schoolToEdit.id %></h2>
+    <%- include("../../partials/navbar", { user }) %>
+    <% let selectDirectorHtml = htmlHelper.getSelectIdCodeFromArr(directors, "directorId", "name", "directorControl", "form-control", schoolToEdit.directorId) %>
+    <form action="/admin/schools/edit/<%= schoolToEdit.id %>" method="POST">
+        <input type="hidden" name="id" value="<%= schoolToEdit.id %>">
+        <div>
+            <label for="nameControl" class="form-label">Name: </label>
+            <input type="text" id="nameControl" class="form-control" name="name" value="<%= schoolToEdit.name %>"/>
+        </div>
+        <div>
+          <label for="addressControl" class="form-label">Address: </label>
+          <input type="text" id="addressControl" class="form-control" name="address" value="<%= schoolToEdit.address %>"/>
+        </div>
+        <div>
+          <label for="directorControl" class="form-label">Director: </label>
+          <%- selectDirectorHtml %>
+        </div>
+        <button type="submit" class="btn">Edit school</button>
+    </form>
+    <%- include("../../partials/footer", { title: "Admin edit school" }) %>
+
+  </body>
+</html>
